@@ -2,7 +2,7 @@
 
 garages is a FiveM Module to store or recover your vehicle.
 
- **Note:
+Inspired by vehsop module
 
 ## Changelog
 You can find our changelog [here](CHANGELOG.md)
@@ -21,3 +21,10 @@ You can find our changelog [here](CHANGELOG.md)
 
 ## Upgrade
 - 
+
+## Issues
+- The vehicle spawn even if there is already a vehicle in the area.
+- The Store does not detect a vehicle in the area and therefore does not store the vehicle in the garage.
+
+## ToDo
+- Fix issus above
