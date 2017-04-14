@@ -36,8 +36,8 @@ local garage = {
 			title = "CATEGORIES",
 			name = "main",
 			buttons = {
-				{name = "Rentrer ton véhicule", description = "", action = "rentrer"},
-				{name = "Sortir ton véhicule", description = "", action = "sortir"},
+				{name = "Store your vehicle", description = "", action = "store"},
+				{name = "Exit the vehicle", description = "", action = "exit"},
 			}
 		},
 	}
@@ -97,7 +97,7 @@ function ShowGarageBlips(bool)
 				for i,b in ipairs(garage_blips) do
 					DrawMarker(1,b.pos.entering[1],b.pos.entering[2],b.pos.entering[3],0,0,0,0,0,0,2.001,2.0001,0.5001,0,155,255,200,0,0,0,0)
 					if GetDistanceBetweenCoords(b.pos.entering[1],b.pos.entering[2],b.pos.entering[3],GetEntityCoords(LocalPed())) < 5 then
-						drawTxt('Appuie sur ~g~Entrée~s~ ouvrir le menu',0,1,0.5,0.8,0.6,255,255,255,255)
+						drawTxt('Press ~g~Enter~s~ to open menu',0,1,0.5,0.8,0.6,255,255,255,255)
 						currentlocation = b
 						inrange = true
 					end
@@ -112,7 +112,7 @@ function ShowGarageBlips(bool)
 		for i,b in ipairs(garage_blips) do
 			DrawMarker(1,b.pos.outside[1],b.pos.outside[2],b.pos.outside[3],0,0,0,0,0,0,2.001,2.0001,0.5001,0,155,255,200,0,0,0,0)
 			if GetDistanceBetweenCoords(b.pos.outside[1],b.pos.outside[2],b.pos.outside[3],GetEntityCoords(LocalPed())) < 5 then
-				drawTxt('Sortie des véhicules, ne pas encombrer.',0,1,0.5,0.8,0.6,255,255,255,255)
+				drawTxt('Exit if vehicles, do not clutter.',0,1,0.5,0.8,0.6,255,255,255,255)
 				currentlocation = b
 				inrange = true
 			end
@@ -128,7 +128,7 @@ Citizen.CreateThread(function()
 		for i,b in ipairs(garage_blips) do
 				DrawMarker(1,b.pos.inside[1],b.pos.inside[2],b.pos.inside[3],0,0,0,0,0,0,2.001,2.0001,0.5001,0,155,255,200,0,0,0,0)
 			if GetDistanceBetweenCoords(b.pos.inside[1],b.pos.inside[2],b.pos.inside[3],GetEntityCoords(LocalPed())) < 5 then
-				drawTxt('Entrée des véhicules, un seul à la fois.',0,1,0.5,0.8,0.6,255,255,255,255)
+				drawTxt('Entry of vehicles, one at a time.',0,1,0.5,0.8,0.6,255,255,255,255)
 				currentlocation = b
 				inrange = true
 			end
@@ -363,23 +363,22 @@ function ButtonSelected(button)
 	local this = garage.currentmenu
 	local btn = button.name
 	if this == "main" then
-		if btn == "Rentrer ton véhicule" then
+		if btn == "Store your vehicle" then
 			if GetClosestVehicle(-320.44219970703, -753.60009765625, 32.96448135376, 10.000, 0, 70)  then
 
-			drawNotification("Aucun véhicule n'est sur la zone.")
+			drawNotification("No vehicle is on the area.")
 			else
 
 				SetEntityAsMissionEntity(vehicle, true, true)
 				DeleteVehicle(vehicle)
 
-			drawNotification("Véhicule rentré")
+			drawNotification("Vehicle stored")
 
 			end
 
 
 			CloseCreator()
-		elseif btn == "Sortir ton véhicule" then
-			local action = "sortir"
+		elseif btn == "Exit the vehicle" then
 			TriggerServerEvent('garages:CheckForVeh','')
 		end
 	end
@@ -449,10 +448,10 @@ AddEventHandler('garages:SpawnVehicle', function(vehicle)
 			veh = CreateVehicle(car, -337.35467529297, -751.50793457031, 32.96448135376, 0.0, true, false)		
 			SetVehicleOnGroundProperly(veh)
 			SetEntityInvincible(veh, false)	
-			drawNotification("Véhicule sortit, bonne route")
+			drawNotification("Vehicle came out, good road")
 			
 		else		
-			drawNotification("La zone est encombrée")
+			drawNotification("The area is crowded")
 		end
 	end		
 	CloseCreator()
