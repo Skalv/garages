@@ -3,15 +3,16 @@ MySQL:open("localhost", "GTA5", "GTA5", "password")
 
 RegisterServerEvent('garages:CheckForVeh')
 AddEventHandler('garages:CheckForVeh', function()
-  print(source)
+  --print(source)
   TriggerEvent('es:getPlayerFromId', source, function(user)
     local player = user.identifier
     local executed_query = MySQL:executeQuery("SELECT personalvehicle FROM users WHERE identifier = '@username'",{['@username'] = player})
     local result = MySQL:getResults(executed_query, {'personalvehicle'}, "identifier")
     if(result)then
       for k,v in ipairs(result)do
-        print(v.personalvehicle)
+        --print(v.personalvehicle)
         vehicle = v.personalvehicle
+      local vehicle = vehicle
       end
     end
     TriggerClientEvent('garages:SpawnVehicle', source, vehicle)
