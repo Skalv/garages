@@ -46,7 +46,6 @@ local garage = {
 local fakecar = {model = '', car = nil}
 local garage_locations = {{
 entering = {-330.45281982422,-779.92169189453,32.96448135376}, 
-inside = {-332.13256835938, -767.78167724609, 32.96448135376}, 
 outside = {-332.13256835938, -767.78167724609, 32.96448135376}
 }}
 
@@ -127,8 +126,8 @@ function ShowGarageBlips(bool)
 				Citizen.Wait(0)
 				local inrange = true
 				for i,b in ipairs(garage_blips) do
-					DrawMarker(1,b.pos.inside[1],b.pos.inside[2],b.pos.inside[3],0,0,0,0,0,0,2.001,2.0001,0.5001,0,155,255,200,0,0,0,0)
-					if GetDistanceBetweenCoords(b.pos.inside[1],b.pos.inside[2],b.pos.inside[3],GetEntityCoords(LocalPed())) < 5 then
+					DrawMarker(1,b.pos.outside[1],b.pos.outside[2],b.pos.outside[3],0,0,0,0,0,0,2.001,2.0001,0.5001,0,155,255,200,0,0,0,0)
+					if GetDistanceBetweenCoords(b.pos.outside[1],b.pos.outside[2],b.pos.outside[3],GetEntityCoords(LocalPed())) < 5 then
 						drawTxt('',0,1,0.5,0.8,0.6,255,255,255,255)
 						currentlocation = b
 						inrange = true
@@ -170,7 +169,7 @@ end
 function OpenCreator()
 	boughtcar = false
 	local ped = LocalPed()
-	local pos = currentlocation.pos.inside
+	local pos = currentlocation.pos.outside
 	local g = Citizen.InvokeNative(0xC906A7DAB05C8D2B,pos[1],pos[2],pos[3],Citizen.PointerValueFloat(),0)
 	garage.currentmenu = "main"
 	garage.opened = true
@@ -429,13 +428,16 @@ end)
 
 AddEventHandler('garages:SpawnVehicle', function(vehicle)
 	local car = GetHashKey(vehicle)
-	print(car)
 	--Citizen.CreateThread(function()
 		local caisseo = GetClosestVehicle(-332.132, -767.781, 33.966, 3.000, 0, 70)
 		if DoesEntityExist(caisseo) then  
 			drawNotification("La zone est encombrée")   
 		else
 			--print (caisseo)
+			RequestModel(car)
+			while not HasModelLoaded(car) do
+				Citizen.Wait(0)
+			end
 			veh = CreateVehicle(car, -332.132, -767.781, 33.966, 0.0, true, false)
 			print(veh)
 			SetVehicleOnGroundProperly(veh)
