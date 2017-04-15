@@ -26,8 +26,8 @@ You can find our changelog [here](CHANGELOG.md)
 - 
 
 ## Issues
-- The vehicle spawn even if there is already a vehicle in the area.
-- The Store does not detect a vehicle in the area and therefore does not store the vehicle in the garage.
+- The vehicle spawn even if there is already a vehicle in the area. <-- Fixed
+- The Store does not detect a vehicle in the area and therefore does not store the vehicle in the garage. <-- Fixed
 
 ## ToDo
-- Fix issus above
+- Fix issus above if there are not already fixed obviously.
