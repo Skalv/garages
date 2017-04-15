@@ -1,5 +1,5 @@
 require "resources/essentialmode/lib/MySQL"
-MySQL:open("localhost", "GTA5", "GTA5", "rb1st8mm")
+MySQL:open("localhost", "GTA5", "GTA5", "pass")
 
 RegisterServerEvent('garages:CheckForVeh')
 AddEventHandler('garages:CheckForVeh', function(vehicle)
