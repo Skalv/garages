@@ -1,7 +1,7 @@
 # TeamSpeak
 gaymadz.fr
 
-# garages v1
+# garages v2
 
 garages is a FiveM Module to store or recover your vehicle.
 
