@@ -27,8 +27,6 @@ WARNING, this is only if you use vehshop in es_freeroam, if not if you use the s
 5. Open **server.lua** and change your database settings.
 6. Restart your server
 
-## Upgrade
-- 
 
 ## Issues
 - The vehicle spawn even if there is already a vehicle in the area. <-- Fixed
@@ -36,4 +34,6 @@ WARNING, this is only if you use vehshop in es_freeroam, if not if you use the s
 
 ## ToDo
 - Fix issus above if there are not already fixed obviously.
-- Alert Cops if a player try to store a vehicule that is not the owner
+- Alert Cops if a player try to store a vehicule that is not the owner.
+- Add function that you can store multiple vehicle.
+- Add multiple location
