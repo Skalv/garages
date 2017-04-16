@@ -22,7 +22,7 @@ WARNING, this is only if you use vehshop in es_freeroam, if not if you use the s
 2. Extract the folder and rename it to garages
 3. Add sql.sql to your database.
 4. Place the folder in your resources/[folder]
-5. Replace vehshop.lua and vehshop_s.lua that are in "resources\[essential]\es_freeroam\stores" whith new ones.
+5. Replace vehshop.lua and vehshop_s.lua with the new ones.
 4. Add - garages to your AutoStartResources in citmp-server.yml
 5. Open **server.lua** and change your database settings.
 6. Restart your server
