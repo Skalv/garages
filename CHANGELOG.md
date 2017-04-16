@@ -5,6 +5,3 @@ The information about the changes can be found below.
 #### Features
 - Spawn your personnal vehicle, if you owned one.
 - Store your personnal vehicule
-
-#### Issues
-- Spawn your personnal vehicle not works until you first do "/pv"
