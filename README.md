@@ -31,6 +31,7 @@ WARNING, this is only if you use vehshop in es_freeroam, if not if you use the s
 ## Issues
 - The vehicle spawn even if there is already a vehicle in the area. <-- Fixed
 - The Store does not detect a vehicle in the area and therefore does not store the vehicle in the garage. <-- Fixed
+- The Shop is empty and you fall under the map.
 
 ## ToDo
 - Fix issus above if there are not already fixed obviously.
