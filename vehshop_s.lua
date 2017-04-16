@@ -29,7 +29,7 @@ AddEventHandler('BuyForVeh', function(vehicle, plate)
     local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username'",{['@username'] = player})
     local result = MySQL:getResults(executed_query, {'vehicle_model'}, "identifier")
 
-    if(result)then
+    if result ~= nil then
 
     local executed_query = MySQL:executeQuery("UPDATE user_vehicle SET `vehicle_model`='@vehicle', `vehicle_plate`= '@plate', `vehicle_state`='@state' WHERE identifier = '@username'",
       {['@username'] = player, ['@vehicle'] = vehicle, ['@plate'] = plate, ['@state'] = state})
