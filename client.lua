@@ -1,5 +1,6 @@
 RegisterNetEvent('garages:FinishCheckForVeh')
 RegisterNetEvent('garages:SpawnVehicle')
+RegisterNetEvent('garages:StoreVehicle')
 --RegisterNetEvent('garages:CheckForVeh')
 
 local Keys = {
@@ -364,17 +365,9 @@ function ButtonSelected(button)
 	local btn = button.name
 	if this == "main" then
 		if btn == "Rentrer ton véhicule" then
-			local caissei = GetClosestVehicle(-332.132, -767.781, 33.966, 3.000, 0, 70)
-			if DoesEntityExist(caissei) then  
-				SetEntityAsMissionEntity(caissei, true, true)
-				Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(caissei))
-				drawNotification("Véhicule rentré")
-			else
-				drawNotification("Aucun véhicule n'est sur la zone.")
-			end
-			CloseCreator()
+			TriggerServerEvent('garages:CheckForVeh',source)
 		elseif btn == "Sortir ton véhicule" then
-		TriggerServerEvent('garages:CheckForVeh',source)
+			TriggerServerEvent('garages:CheckForSpawnVeh',source)
 		end
 	end
 end
@@ -426,23 +419,53 @@ local firstspawn = 0
 end)
 
 
-AddEventHandler('garages:SpawnVehicle', function(vehicle)
+AddEventHandler('garages:SpawnVehicle', function(vehicle, plate, state)
 	local car = GetHashKey(vehicle)
-	--Citizen.CreateThread(function()
+	local plate = plate
+	local state = state
+	Citizen.CreateThread(function()
 		local caisseo = GetClosestVehicle(-332.132, -767.781, 33.966, 3.000, 0, 70)
-		if DoesEntityExist(caisseo) then  
-			drawNotification("La zone est encombrée")   
+		if DoesEntityExist(caisseo) then
+			drawNotification("La zone est encombrée") 
 		else
-			--print (caisseo)
-			RequestModel(car)
-			while not HasModelLoaded(car) do
-				Citizen.Wait(0)
-			end
-			veh = CreateVehicle(car, -332.132, -767.781, 33.966, 0.0, true, false)
-			print(veh)
-			SetVehicleOnGroundProperly(veh)
-			SetEntityInvincible(veh, false) 
-			drawNotification("Véhicule sortit, bonne route")
-		end   
+			if state == "out" then
+				drawNotification("Ce véhicule n'est pas dans le garage")
+			else			
+				RequestModel(car)
+				while not HasModelLoaded(car) do
+					Citizen.Wait(0)
+				end
+				veh = CreateVehicle(car, -332.132, -767.781, 33.966, 0.0, true, false)
+				SetVehicleNumberPlateText(veh, plate)
+				SetVehRadioStation(veh, "RADIO_02_POP")
+				SetVehicleOnGroundProperly(veh)
+				SetEntityInvincible(veh, false) 
+				drawNotification("Véhicule sortit, bonne route")				
+				TriggerServerEvent('garages:SetVehOut', vehicle)
+			end   
+			CloseCreator()
+		end
+	end)
+end)
+
+AddEventHandler('garages:StoreVehicle', function(vehicle, plate)
+	local car = GetHashKey(vehicle)	
+	local plate = plate
+	Citizen.CreateThread(function()
+		local caissei = GetClosestVehicle(-332.132, -767.781, 33.966, 3.000, 0, 70)
+		SetEntityAsMissionEntity(caissei, true, true)		
+		local platecaissei = GetVehicleNumberPlateText(caissei)
+		if DoesEntityExist(caissei) then	
+				if plate ~= platecaissei then					
+					drawNotification("Ce n'est pas ton véhicule" ..plate..platecaissei)
+				else
+					Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(caissei))
+					drawNotification("Véhicule rentré")
+					TriggerServerEvent('garages:SetVehIn', plate)
+				end
+			else
+				drawNotification("Aucun véhicule n'est sur la zone.")
+			end   
 		CloseCreator()
+	end)
 end)
