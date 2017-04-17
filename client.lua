@@ -425,7 +425,8 @@ AddEventHandler('garages:SpawnVehicle', function(vehicle, plate, state)
 	local car = GetHashKey(vehicle)
 	local plate = plate
 	local state = state
-	Citizen.CreateThread(function()
+	Citizen.CreateThread(function()			
+		Citizen.Wait(5000)
 		local caisseo = GetClosestVehicle(215.124, -791.377, 30.836, 3.000, 0, 70)
 		if DoesEntityExist(caisseo) then
 			drawNotification("La zone est encombrée") 
@@ -453,7 +454,8 @@ end)
 AddEventHandler('garages:StoreVehicle', function(vehicle, plate)
 	local car = GetHashKey(vehicle)	
 	local plate = plate
-	Citizen.CreateThread(function()
+	Citizen.CreateThread(function()		
+		Citizen.Wait(5000)
 		local caissei = GetClosestVehicle(215.124, -791.377, 30.836, 3.000, 0, 70)
 		SetEntityAsMissionEntity(caissei, true, true)		
 		local platecaissei = GetVehicleNumberPlateText(caissei)
