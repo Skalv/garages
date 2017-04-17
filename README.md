@@ -17,16 +17,7 @@ You can find our changelog [here](CHANGELOG.md)
 ## Installation
 WARNING, this is only if you use vehshop in es_freeroam, if not if you use the standalone version i will not bring help if something shitty happen
 
-
-1. Download
-2. Extract the folder and rename it to garages
-3. Add sql.sql to your database.
-4. Place the folder in your resources/[folder]
-5. Replace vehshop.lua and vehshop_s.lua with the new ones.
-4. Add - garages to your AutoStartResources in citmp-server.yml
-5. Open **server.lua** and change your database settings.
-6. Restart your server
-
+See : https://forum.fivem.net/t/release-garages-16-04-17-updated/13066
 
 ## Issues
 - The vehicle spawn even if there is already a vehicle in the area. <-- Fixed
