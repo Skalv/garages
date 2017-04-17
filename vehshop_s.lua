@@ -32,13 +32,21 @@ AddEventHandler('BuyForVeh', function(vehicle, plate, primaryColor, secondaryCol
     local result = MySQL:getResults(executed_query, {'identifier'})
 
     if(result)then
+      for k,v in ipairs(result)do
+        print(v.identifier)
+        joueur = v.identifier
+        local joueur = joueur
+       end
+    end
 
-      local executed_query = MySQL:executeQuery("INSERT INTO user_vehicle (`identifier`, `vehicle_model`, `vehicle_plate`, `vehicle_state`, `vehicle_colorprimary`, `vehicle_colorsecondary`) VALUES ('@username', '@vehicle', '@plate', '@state', '@primaryColor', '@secondaryColor')",
+    if joueur ~= nil then
+
+      local executed_query = MySQL:executeQuery("UPDATE user_vehicle SET `vehicle_model`='@vehicle', `vehicle_plate`= '@plate', `vehicle_state`='@state', `vehicle_colorprimary`='@primaryColor', `vehicle_colorsecondary`='@secondaryColor' WHERE identifier = '@username'",
       {['@username'] = player, ['@vehicle'] = vehicle, ['@plate'] = plate, ['@state'] = state, ['@primaryColor'] = primaryColor, ['@secondaryColor'] = secondaryColor})
 
     else
 
-      local executed_query = MySQL:executeQuery("UPDATE user_vehicle SET `vehicle_model`='@vehicle', `vehicle_plate`= '@plate', `vehicle_state`='@state', `vehicle_colorprimary`='@primaryColor', `vehicle_colorsecondary`='@secondaryColor' WHERE identifier = '@username'",
+      local executed_query = MySQL:executeQuery("INSERT INTO user_vehicle (`identifier`, `vehicle_model`, `vehicle_plate`, `vehicle_state`, `vehicle_colorprimary`, `vehicle_colorsecondary`) VALUES ('@username', '@vehicle', '@plate', '@state', '@primaryColor', '@secondaryColor')",
       {['@username'] = player, ['@vehicle'] = vehicle, ['@plate'] = plate, ['@state'] = state, ['@primaryColor'] = primaryColor, ['@secondaryColor'] = secondaryColor})
 
     end
