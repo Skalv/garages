@@ -459,7 +459,7 @@ AddEventHandler('garages:StoreVehicle', function(vehicle, plate)
 		local platecaissei = GetVehicleNumberPlateText(caissei)
 		if DoesEntityExist(caissei) then	
 				if plate ~= platecaissei then					
-					drawNotification("Ce n'est pas ton véhicule" ..plate..platecaissei)
+					drawNotification("Ce n'est pas ton véhicule")
 				else
 					Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(caissei))
 					drawNotification("Véhicule rentré")
