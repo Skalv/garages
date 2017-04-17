@@ -30,17 +30,15 @@ AddEventHandler('BuyForVeh', function(vehicle, plate)
     local result = MySQL:getResults(executed_query, {'identifier'})
 
     if(result)then
-      for k,v in ipairs(result)do
-       identifier = v.identifier
-      end
-      local identifier = identifier
-      if identifier == nil then
-        local executed_query = MySQL:executeQuery("INSERT INTO user_vehicle (`identifier`, `vehicle_model`, `vehicle_plate`, `vehicle_state`) VALUES ('@username', '@vehicle', '@plate', '@state')",
-        {['@username'] = player, ['@vehicle'] = vehicle, ['@plate'] = plate, ['@state'] = state})
-      else
-        local executed_query = MySQL:executeQuery("UPDATE user_vehicle SET `vehicle_model`='@vehicle', `vehicle_plate`= '@plate', `vehicle_state`='@state' WHERE identifier = '@username'",
-        {['@username'] = player, ['@vehicle'] = vehicle, ['@plate'] = plate, ['@state'] = state})
-      end
+
+      local executed_query = MySQL:executeQuery("INSERT INTO user_vehicle (`identifier`, `vehicle_model`, `vehicle_plate`, `vehicle_state`) VALUES ('@username', '@vehicle', '@plate', '@state')",
+      {['@username'] = player, ['@vehicle'] = vehicle, ['@plate'] = plate, ['@state'] = state})
+
+    else
+
+      local executed_query = MySQL:executeQuery("UPDATE user_vehicle SET `vehicle_model`='@vehicle', `vehicle_plate`= '@plate', `vehicle_state`='@state' WHERE identifier = '@username'",
+      {['@username'] = player, ['@vehicle'] = vehicle, ['@plate'] = plate, ['@state'] = state})
+
     end
   end)
 end)
