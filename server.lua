@@ -90,7 +90,7 @@ AddEventHandler('garages:SetVehIn', function(plate)
   TriggerEvent('es:getPlayerFromId', source, function(user)
     local player = user.identifier
     local plate = plate
-    local state = "In"
+    local state = "in"
 
     MySQL:executeQuery("UPDATE user_vehicle SET vehicle_state='@state' WHERE identifier = '@username' AND vehicle_plate = '@plate'",
       {['@username'] = player, ['@plate'] = plate, ['@state'] = state})
