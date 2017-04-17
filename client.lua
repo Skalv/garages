@@ -46,9 +46,10 @@ local garage = {
 
 local fakecar = {model = '', car = nil}
 local garage_locations = {{
-entering = {-330.45281982422,-779.92169189453,32.96448135376}, 
-outside = {-332.13256835938, -767.78167724609, 32.96448135376}
+entering = {213.769,-808.965,29.914}, 
+outside = {215.124, -791.377,29.936}
 }}
+
 
 local garage_blips ={}
 local inrangeofgarage = false
@@ -85,6 +86,7 @@ function ShowGarageBlips(bool)
 			pos = pos.entering
 			local blip = AddBlipForCoord(pos[1],pos[2],pos[3])
 			SetBlipSprite(blip,357)
+			SetBlipColour(blip, 3)
 			BeginTextCommandSetBlipName("STRING")
 			AddTextComponentString('Garage')
 			EndTextCommandSetBlipName(blip)
@@ -424,7 +426,7 @@ AddEventHandler('garages:SpawnVehicle', function(vehicle, plate, state)
 	local plate = plate
 	local state = state
 	Citizen.CreateThread(function()
-		local caisseo = GetClosestVehicle(-332.132, -767.781, 33.966, 3.000, 0, 70)
+		local caisseo = GetClosestVehicle(215.124, -791.377, 30.836, 3.000, 0, 70)
 		if DoesEntityExist(caisseo) then
 			drawNotification("La zone est encombrée") 
 		else
@@ -435,7 +437,7 @@ AddEventHandler('garages:SpawnVehicle', function(vehicle, plate, state)
 				while not HasModelLoaded(car) do
 					Citizen.Wait(0)
 				end
-				veh = CreateVehicle(car, -332.132, -767.781, 33.966, 0.0, true, false)
+				veh = CreateVehicle(car, 215.124, -791.377, 30.836, 0.0, true, false)
 				SetVehicleNumberPlateText(veh, plate)
 				SetVehRadioStation(veh, "RADIO_02_POP")
 				SetVehicleOnGroundProperly(veh)
@@ -452,7 +454,7 @@ AddEventHandler('garages:StoreVehicle', function(vehicle, plate)
 	local car = GetHashKey(vehicle)	
 	local plate = plate
 	Citizen.CreateThread(function()
-		local caissei = GetClosestVehicle(-332.132, -767.781, 33.966, 3.000, 0, 70)
+		local caissei = GetClosestVehicle(215.124, -791.377, 30.836, 3.000, 0, 70)
 		SetEntityAsMissionEntity(caissei, true, true)		
 		local platecaissei = GetVehicleNumberPlateText(caissei)
 		if DoesEntityExist(caissei) then	
