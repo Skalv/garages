@@ -1,7 +1,6 @@
 RegisterNetEvent('garages:FinishCheckForVeh')
 RegisterNetEvent('garages:SpawnVehicle')
 RegisterNetEvent('garages:StoreVehicle')
---RegisterNetEvent('garages:CheckForVeh')
 
 local Keys = {
 	["ESC"] = 322, ["F1"] = 288, ["F2"] = 289, ["F3"] = 170, ["F5"] = 166, ["F6"] = 167, ["F7"] = 168, ["F8"] = 169, ["F9"] = 56, ["F10"] = 57, 
@@ -100,7 +99,7 @@ function ShowGarageBlips(bool)
 				local inrange = false
 				for i,b in ipairs(garage_blips) do
 					DrawMarker(1,b.pos.entering[1],b.pos.entering[2],b.pos.entering[3],0,0,0,0,0,0,2.001,2.0001,0.5001,0,155,255,200,0,0,0,0)
-					if GetDistanceBetweenCoords(b.pos.entering[1],b.pos.entering[2],b.pos.entering[3],GetEntityCoords(LocalPed())) < 5 then
+					if GetDistanceBetweenCoords(b.pos.entering[1],b.pos.entering[2],b.pos.entering[3],GetEntityCoords(LocalPed())) < 2 then
 						drawTxt('Appuie sur ~g~Entrée~s~ ouvrir le menu',0,1,0.5,0.8,0.6,255,255,255,255)
 						currentlocation = b
 						inrange = true
@@ -115,7 +114,7 @@ function ShowGarageBlips(bool)
 				local inrange = true
 				for i,b in ipairs(garage_blips) do
 					DrawMarker(1,b.pos.outside[1],b.pos.outside[2],b.pos.outside[3],0,0,0,0,0,0,2.001,2.0001,0.5001,0,155,255,200,0,0,0,0)
-					if GetDistanceBetweenCoords(b.pos.outside[1],b.pos.outside[2],b.pos.outside[3],GetEntityCoords(LocalPed())) < 5 then
+					if GetDistanceBetweenCoords(b.pos.outside[1],b.pos.outside[2],b.pos.outside[3],GetEntityCoords(LocalPed())) < 4 then
 						drawTxt('Entrée et Sortie des véhicules, ne pas encombrer inutilement.',0,1,0.5,0.8,0.6,255,255,255,255)
 						currentlocation = b
 						inrange = true
@@ -183,13 +182,6 @@ local vehicle_price = 0
 
 function CloseCreator()
 	Citizen.CreateThread(function()
-		local ped = LocalPed()
-		if not boughtcar then
-			local pos = currentlocation.pos.entering
-			SetEntityCoords(ped,pos[1],pos[2],pos[3])
-			FreezeEntityPosition(ped,false)
-			SetEntityVisible(ped,true)
-		end
 		garage.opened = false
 		garage.menu.from = 1
 		garage.menu.to = 10
@@ -374,6 +366,10 @@ function ButtonSelected(button)
 	end
 end
 
+AddEventHandler("playerSpawned", function(spawn)
+    TriggerServerEvent("garages:PutVehInGarages",source)
+end)
+
 AddEventHandler('FinishCheckForVeh', function(vehicle)
 	boughtcar = true
 	CloseCreator(vehicle)
@@ -421,12 +417,14 @@ local firstspawn = 0
 end)
 
 
-AddEventHandler('garages:SpawnVehicle', function(vehicle, plate, state)
+AddEventHandler('garages:SpawnVehicle', function(vehicle, plate, state, primarycolor, secondarycolor)
 	local car = GetHashKey(vehicle)
 	local plate = plate
 	local state = state
+	local primarycolor = primarycolor
+	local secondarycolor = secondarycolor
 	Citizen.CreateThread(function()			
-		Citizen.Wait(5000)
+		Citizen.Wait(3000)
 		local caisseo = GetClosestVehicle(215.124, -791.377, 30.836, 3.000, 0, 70)
 		if DoesEntityExist(caisseo) then
 			drawNotification("La zone est encombrée") 
@@ -435,15 +433,12 @@ AddEventHandler('garages:SpawnVehicle', function(vehicle, plate, state)
 				drawNotification("Ce véhicule n'est pas dans le garage")
 			else			
 				RequestModel(car)
-				while not HasModelLoaded(car) do
-					Citizen.Wait(0)
-				end
 				veh = CreateVehicle(car, 215.124, -791.377, 30.836, 0.0, true, false)
 				SetVehicleNumberPlateText(veh, plate)
-				SetVehRadioStation(veh, "RADIO_02_POP")
 				SetVehicleOnGroundProperly(veh)
+				SetVehicleColours(veh, primarycolor, secondarycolor)
 				SetEntityInvincible(veh, false) 
-				drawNotification("Véhicule sortit, bonne route")				
+				drawNotification("Véhicule sorti, bonne route")				
 				TriggerServerEvent('garages:SetVehOut', vehicle)
 			end   
 			CloseCreator()
@@ -455,7 +450,7 @@ AddEventHandler('garages:StoreVehicle', function(vehicle, plate)
 	local car = GetHashKey(vehicle)	
 	local plate = plate
 	Citizen.CreateThread(function()		
-		Citizen.Wait(5000)
+		Citizen.Wait(3000)
 		local caissei = GetClosestVehicle(215.124, -791.377, 30.836, 3.000, 0, 70)
 		SetEntityAsMissionEntity(caissei, true, true)		
 		local platecaissei = GetVehicleNumberPlateText(caissei)
