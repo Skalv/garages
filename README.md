@@ -75,8 +75,6 @@ Where is the garage?
 ... and other issues of this kind.
 If you ask yourself these questions, start by learning the lua
 
-https://github.com/plysken/Garages
-
 http://gta.wikia.com/wiki/Vehicles_in_GTA_V
 
 Location : 
