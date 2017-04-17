@@ -38,21 +38,15 @@ AddEventHandler('BuyForVeh', function(vehicle, plate, primarycolor, secondarycol
         local joueur = joueur
        end
     end
-
     if joueur ~= nil then
-
       local executed_query = MySQL:executeQuery("UPDATE user_vehicle SET `vehicle_model`='@vehicle', `vehicle_plate`= '@plate', `vehicle_state`='@state', `vehicle_colorprimary`='@primarycolor', `vehicle_colorsecondary`='@secondarycolor' WHERE identifier = '@username'",
-      {['@username'] = player, ['@vehicle'] = vehicle, ['@plate'] = plate, ['@state'] = state, ['@primarycolor'] = primaryColor, ['@secondarycolor'] = secondaryColor})
-
+      {['@username'] = player, ['@vehicle'] = vehicle, ['@plate'] = plate, ['@state'] = state, ['@primarycolor'] = primarycolor, ['@secondarycolor'] = secondarycolor})
     else
-
       local executed_query = MySQL:executeQuery("INSERT INTO user_vehicle (`identifier`, `vehicle_model`, `vehicle_plate`, `vehicle_state`, `vehicle_colorprimary`, `vehicle_colorsecondary`) VALUES ('@username', '@vehicle', '@plate', '@state', '@primarycolor', '@secondarycolor')",
-      {['@username'] = player, ['@vehicle'] = vehicle, ['@plate'] = plate, ['@state'] = state, ['@primarycolor'] = primaryColor, ['@secondarycolor'] = secondaryColor})
-
+      {['@username'] = player, ['@vehicle'] = vehicle, ['@plate'] = plate, ['@state'] = state, ['@primarycolor'] = primarycolor, ['@secondarycolor'] = secondarycolor})
     end
   end)
 end)
-
 
 -- Spawn the personal vehicle
 TriggerEvent('es:addCommand', 'pv', function(source, user)
