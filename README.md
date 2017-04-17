@@ -36,7 +36,7 @@ You have to wailt 5+ second before store or get your vehicle and other player mu
 1. Download
 2. Extract the folder and rename it to garages
 3. Add sql.sql to your database.
-<img src="/uploads/default/original/2X/9/9afd77a85b2abb4e04fc4f9e2d49a7570a274fa1.PNG" width="690" height="163">
+<img src="http://plysken.com/gta5/001.PNG" width="690" height="163">
 4. Place the folder in your resources/[folder]
 5. Replace vehshop.lua and vehshop_s.lua with the new ones.
 6. Add - garages to your AutoStartResources in citmp-server.yml
@@ -80,7 +80,7 @@ https://github.com/plysken/Garages
 http://gta.wikia.com/wiki/Vehicles_in_GTA_V
 
 Location : 
-<img src="/uploads/default/original/2X/5/58d6154d4aa634fc01848d4f3fd3d3a351d91f11.PNG" width="690" height="285">
+<img src="http://plysken.com/gta5/002.PNG" width="690" height="285">
 
 This mod was inspired by es_vehsjop witch is a part of 
 https://github.com/FiveM-Scripts/es_freeroam
