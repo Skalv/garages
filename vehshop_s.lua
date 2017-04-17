@@ -19,25 +19,27 @@ AddEventHandler('CheckMoneyForVeh', function(vehicle, price)
 end)
 end)
 
-AddEventHandler('BuyForVeh', function(vehicle, plate)
+AddEventHandler('BuyForVeh', function(vehicle, plate, primaryColor, secondaryColor)
   TriggerEvent('es:getPlayerFromId', source, function(user)
 
     local player = user.identifier
     local plate = plate
     local state = "out"
+    local primaryColor = primaryColor
+    local secondaryColor = secondaryColor
 
     local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username'",{['@username'] = player})
     local result = MySQL:getResults(executed_query, {'identifier'})
 
     if(result)then
 
-      local executed_query = MySQL:executeQuery("INSERT INTO user_vehicle (`identifier`, `vehicle_model`, `vehicle_plate`, `vehicle_state`) VALUES ('@username', '@vehicle', '@plate', '@state')",
-      {['@username'] = player, ['@vehicle'] = vehicle, ['@plate'] = plate, ['@state'] = state})
+      local executed_query = MySQL:executeQuery("INSERT INTO user_vehicle (`identifier`, `vehicle_model`, `vehicle_plate`, `vehicle_state`, `vehicle_colorprimary`, `vehicle_colorsecondary`) VALUES ('@username', '@vehicle', '@plate', '@state', '@primaryColor', '@secondaryColor')",
+      {['@username'] = player, ['@vehicle'] = vehicle, ['@plate'] = plate, ['@state'] = state, ['@primaryColor'] = primaryColor, ['@secondaryColor'] = secondaryColor})
 
     else
 
-      local executed_query = MySQL:executeQuery("UPDATE user_vehicle SET `vehicle_model`='@vehicle', `vehicle_plate`= '@plate', `vehicle_state`='@state' WHERE identifier = '@username'",
-      {['@username'] = player, ['@vehicle'] = vehicle, ['@plate'] = plate, ['@state'] = state})
+      local executed_query = MySQL:executeQuery("UPDATE user_vehicle SET `vehicle_model`='@vehicle', `vehicle_plate`= '@plate', `vehicle_state`='@state', `vehicle_colorprimary`='@primaryColor', `vehicle_colorsecondary`='@secondaryColor' WHERE identifier = '@username'",
+      {['@username'] = player, ['@vehicle'] = vehicle, ['@plate'] = plate, ['@state'] = state, ['@primaryColor'] = primaryColor, ['@secondaryColor'] = secondaryColor})
 
     end
   end)
