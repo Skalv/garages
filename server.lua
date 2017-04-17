@@ -11,17 +11,20 @@ AddEventHandler('garages:PutVehInGarages', function(vehicle)
   TriggerEvent('es:getPlayerFromId', source, function(user)
 
     local player = user.identifier
-    local state ="In"
+    local state ="in"
 
     local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username'",{['@username'] = player})
     local result = MySQL:getResults(executed_query, {'identifier'})
 
     if(result)then
+      for k,v in ipairs(result)do
+        print(v.identifier)
+        joueur = v.identifier
+        local joueur = joueur
+       end
+    end
 
-      --local executed_query = MySQL:executeQuery("INSERT INTO user_vehicle (`identifier`, `vehicle_model`, `vehicle_plate`, `vehicle_state`, `vehicle_colorprimary`, `vehicle_colorsecondary`) VALUES ('@username', '@vehicle', '@plate', '@state', '@primaryColor', '@secondaryColor')",
-      --{['@username'] = player, ['@vehicle'] = vehicle, ['@plate'] = plate, ['@state'] = state, ['@primaryColor'] = primaryColor, ['@secondaryColor'] = secondaryColor})
-
-    --else
+    if joueur ~= nil then
 
       local executed_query = MySQL:executeQuery("UPDATE user_vehicle SET `vehicle_state`='@state' WHERE identifier = '@username'",
       {['@username'] = player, ['@state'] = state})
