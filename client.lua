@@ -458,17 +458,16 @@ AddEventHandler('garages:StoreVehicle', function(vehicle, plate)
 		SetEntityAsMissionEntity(caissei, true, true)		
 		local platecaissei = GetVehicleNumberPlateText(caissei)
 		if DoesEntityExist(caissei) then	
-				if plate ~= platecaissei then					
-					drawNotification("Ce n'est pas ton véhicule")
-				else
-					DeleteVehicle(caissei)
-					--Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(caissei))
-					drawNotification("Véhicule rentré")
-					TriggerServerEvent('garages:SetVehIn', plate)
-				end
+			if plate ~= platecaissei then					
+				drawNotification("Ce n'est pas ton véhicule")
 			else
-				drawNotification("Aucun véhicule n'est sur la zone.")
-			end   
+				Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(caissei))
+				drawNotification("Véhicule rentré")
+				TriggerServerEvent('garages:SetVehIn', plate)
+			end
+		else
+			drawNotification("Aucun véhicule n'est sur la zone.")
+		end   
 		CloseCreator()
 	end)
 end)
