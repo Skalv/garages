@@ -6,7 +6,7 @@ The information about the changes can be found below.
 - Changed the location cause the old one got issues.
 - Added a colour to the blip.
 - Added function when player spawn on server, it set vehicle available in the garage.
-- Changed in vehsop.lua that when before the player selected an action, he was teleported into the marker, now not.
+- Changed in that when before the player selected an action, he was teleported into the marker, now not.
 
 ## v2 (16-4-2017)  
 #### Features
