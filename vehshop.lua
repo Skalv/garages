@@ -436,8 +436,10 @@ function CloseCreator(veh)
 			SetVehicleColours(personalvehicle,colors[1],colors[2])
 			SetVehicleExtraColours(personalvehicle,extra_colors[1],extra_colors[2])
 			TaskWarpPedIntoVehicle(GetPlayerPed(-1),personalvehicle,-1)
-			SetEntityVisible(ped,true)
-			TriggerServerEvent('BuyForVeh', vehicle, plate)
+			SetEntityVisible(ped,true)			
+			local primaryColor = colors[1]
+			local secondaryColor = colors[2]
+			TriggerServerEvent('BuyForVeh', vehicle, plate, primaryColor, secondaryColor)
 		end
 		vehshop.opened = false
 		vehshop.menu.from = 1
@@ -507,15 +509,17 @@ local menu = vehshop.menu
 	DrawRect(x,y,menu.width,menu.height,0,0,0,150)
 	DrawText(x - menu.width/2 + 0.005, y - menu.height/2 + 0.0028)
 end
+
 function tablelength(T)
   local count = 0
   for _ in pairs(T) do count = count + 1 end
   return count
 end
+
 function Notify(text)
-SetNotificationTextEntry('STRING')
-AddTextComponentString(text)
-DrawNotification(false, false)
+	SetNotificationTextEntry('STRING')
+	AddTextComponentString(text)
+	DrawNotification(false, false)
 end
 
 function DoesPlayerHaveVehicle(model,button,y,selected)
