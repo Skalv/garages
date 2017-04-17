@@ -1,6 +1,11 @@
 # Changelog
 The information about the changes can be found below. 
 
+## v2.1 (17-4-2017)  
+#### Features
+- Changed the location cause the old one got issues.
+- Added a colour to the blip.
+
 ## v2 (16-4-2017)  
 #### Features
 - Changed veshop.lua and veshop_s.lua because the mod does not include the function of saving the license plate in the database.
