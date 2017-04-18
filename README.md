@@ -1,6 +1,3 @@
-# TeamSpeak
-gaymadz.fr
-
 # garages v2.1
 
 Hi everyone
