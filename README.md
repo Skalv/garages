@@ -74,8 +74,6 @@ If you ask yourself these questions, start by learning the lua
 
 http://gta.wikia.com/wiki/Vehicles_in_GTA_V
 
-Location : 
-<img src="http://plysken.com/gta5/002.PNG" width="690" height="285">
 
 This mod was inspired by es_vehsjop witch is a part of 
 https://github.com/FiveM-Scripts/es_freeroam
