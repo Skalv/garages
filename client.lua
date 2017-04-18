@@ -433,6 +433,9 @@ AddEventHandler('garages:SpawnVehicle', function(vehicle, plate, state, primaryc
 				drawNotification("Ce véhicule n'est pas dans le garage")
 			else			
 				RequestModel(car)
+				while not HasModelLoaded(car) do
+					Citizen.Wait(0)
+				end
 				veh = CreateVehicle(car, 215.124, -791.377, 30.836, 0.0, true, false)
 				SetVehicleNumberPlateText(veh, plate)
 				SetVehicleOnGroundProperly(veh)
