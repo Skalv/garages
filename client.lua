@@ -3,12 +3,12 @@ RegisterNetEvent('garages:SpawnVehicle')
 RegisterNetEvent('garages:StoreVehicle')
 
 local Keys = {
-	["ESC"] = 322, ["F1"] = 288, ["F2"] = 289, ["F3"] = 170, ["F5"] = 166, ["F6"] = 167, ["F7"] = 168, ["F8"] = 169, ["F9"] = 56, ["F10"] = 57, 
-	["~"] = 243, ["1"] = 157, ["2"] = 158, ["3"] = 160, ["4"] = 164, ["5"] = 165, ["6"] = 159, ["7"] = 161, ["8"] = 162, ["9"] = 163, ["-"] = 84, ["="] = 83, ["BACKSPACE"] = 177, 
+	["ESC"] = 322, ["F1"] = 288, ["F2"] = 289, ["F3"] = 170, ["F5"] = 166, ["F6"] = 167, ["F7"] = 168, ["F8"] = 169, ["F9"] = 56, ["F10"] = 57,
+	["~"] = 243, ["1"] = 157, ["2"] = 158, ["3"] = 160, ["4"] = 164, ["5"] = 165, ["6"] = 159, ["7"] = 161, ["8"] = 162, ["9"] = 163, ["-"] = 84, ["="] = 83, ["BACKSPACE"] = 177,
 	["TAB"] = 37, ["Q"] = 44, ["W"] = 32, ["E"] = 38, ["R"] = 45, ["T"] = 245, ["Y"] = 246, ["U"] = 303, ["P"] = 199, ["["] = 39, ["]"] = 40, ["ENTER"] = 18,
 	["CAPS"] = 137, ["A"] = 34, ["S"] = 8, ["D"] = 9, ["F"] = 23, ["G"] = 47, ["H"] = 74, ["K"] = 311, ["L"] = 182,
 	["LEFTSHIFT"] = 21, ["Z"] = 20, ["X"] = 73, ["C"] = 26, ["V"] = 0, ["B"] = 29, ["N"] = 249, ["M"] = 244, [","] = 82, ["."] = 81,
-	["LEFTCTRL"] = 36, ["LEFTALT"] = 19, ["SPACE"] = 22, ["RIGHTCTRL"] = 70, 
+	["LEFTCTRL"] = 36, ["LEFTALT"] = 19, ["SPACE"] = 22, ["RIGHTCTRL"] = 70,
 	["HOME"] = 213, ["PAGEUP"] = 10, ["PAGEDOWN"] = 11, ["DELETE"] = 178,
 	["LEFT"] = 174, ["RIGHT"] = 175, ["TOP"] = 27, ["DOWN"] = 173,
 	["NENTER"] = 201, ["N4"] = 108, ["N5"] = 60, ["N6"] = 107, ["N+"] = 96, ["N-"] = 97, ["N7"] = 117, ["N8"] = 61, ["N9"] = 118
@@ -45,7 +45,7 @@ local garage = {
 
 local fakecar = {model = '', car = nil}
 local garage_locations = {{
-entering = {213.769,-808.965,29.914}, 
+entering = {213.769,-808.965,29.914},
 outside = {215.124, -791.377,29.936}
 }}
 
@@ -253,8 +253,8 @@ end
 
 function tablelength(T)
 	local count = 0
-	for _ in pairs(T) do 
-		count = count + 1 
+	for _ in pairs(T) do
+		count = count + 1
 	end
 	return count
 end
@@ -290,7 +290,7 @@ local backlock = false
 				else
 					OpenCreator()
 				end
-			end   
+			end
 		if garage.opened then
 			local ped = LocalPed()
 			local menu = garage.menu[garage.currentmenu]
@@ -417,48 +417,53 @@ local firstspawn = 0
 end)
 
 
-AddEventHandler('garages:SpawnVehicle', function(vehicle, plate, state, primarycolor, secondarycolor)
-	local car = GetHashKey(vehicle)
-	local plate = plate
-	local state = state
-	local primarycolor = primarycolor
-	local secondarycolor = secondarycolor
-	Citizen.CreateThread(function()			
-		Citizen.Wait(3000)
-		local caisseo = GetClosestVehicle(215.124, -791.377, 30.836, 3.000, 0, 70)
-		if DoesEntityExist(caisseo) then
-			drawNotification("La zone est encombrée") 
-		else
-			if state == "out" then
-				drawNotification("Ce véhicule n'est pas dans le garage")
-			else			
-				RequestModel(car)
-				while not HasModelLoaded(car) do
-					Citizen.Wait(0)
-				end
-				veh = CreateVehicle(car, 215.124, -791.377, 30.836, 0.0, true, false)
-				SetVehicleNumberPlateText(veh, plate)
-				SetVehicleOnGroundProperly(veh)
-				SetVehicleColours(veh, primarycolor, secondarycolor)
-				SetEntityInvincible(veh, false) 
-				drawNotification("Véhicule sorti, bonne route")				
-				TriggerServerEvent('garages:SetVehOut', vehicle)
-			end   
-			CloseCreator()
-		end
-	end)
+AddEventHandler('garages:SpawnVehicle', function(vehicle, plate, state, primarycolor, secondarycolor, spawnIt)
+  if spawnIt then
+    drawNotification(plate)
+    local car = GetHashKey(vehicle)
+    local plate = plate
+    local state = state
+    local primarycolor = primarycolor
+    local secondarycolor = secondarycolor
+    Citizen.CreateThread(function()
+      Citizen.Wait(3000)
+      local caisseo = GetClosestVehicle(215.124, -791.377, 30.836, 3.000, 0, 70)
+      if DoesEntityExist(caisseo) then
+        drawNotification("La zone est encombrée")
+      else
+        if state == "out" then
+          drawNotification("Ce véhicule n'est pas dans le garage")
+        else
+          RequestModel(car)
+          while not HasModelLoaded(car) do
+            Citizen.Wait(0)
+          end
+          veh = CreateVehicle(car, 215.124, -791.377, 30.836, 0.0, true, false)
+          SetVehicleNumberPlateText(veh, plate)
+          SetVehicleOnGroundProperly(veh)
+          SetVehicleColours(veh, primarycolor, secondarycolor)
+          SetEntityInvincible(veh, false)
+          drawNotification("Véhicule sorti, bonne route")
+          TriggerServerEvent('garages:SetVehOut', vehicle)
+        end
+        CloseCreator()
+      end
+    end)
+  else
+    drawNotification("Tu n'a pas de vehicule !")
+  end
 end)
 
 AddEventHandler('garages:StoreVehicle', function(vehicle, plate)
-	local car = GetHashKey(vehicle)	
+	local car = GetHashKey(vehicle)
 	local plate = plate
-	Citizen.CreateThread(function()		
+	Citizen.CreateThread(function()
 		Citizen.Wait(3000)
 		local caissei = GetClosestVehicle(215.124, -791.377, 30.836, 3.000, 0, 70)
-		SetEntityAsMissionEntity(caissei, true, true)		
+		SetEntityAsMissionEntity(caissei, true, true)
 		local platecaissei = GetVehicleNumberPlateText(caissei)
-		if DoesEntityExist(caissei) then	
-			if plate ~= platecaissei then					
+		if DoesEntityExist(caissei) then
+			if plate ~= platecaissei then
 				drawNotification("Ce n'est pas ton véhicule")
 			else
 				Citizen.InvokeNative(0xEA386986E786A54F, Citizen.PointerValueIntInitialized(caissei))
@@ -467,7 +472,7 @@ AddEventHandler('garages:StoreVehicle', function(vehicle, plate)
 			end
 		else
 			drawNotification("Aucun véhicule n'est sur la zone.")
-		end   
+		end
 		CloseCreator()
 	end)
 end)

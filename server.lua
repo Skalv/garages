@@ -1,5 +1,5 @@
 require "resources/essentialmode/lib/MySQL"
-MySQL:open("localhost", "GTA5", "GTA5", "password")
+MySQL:open("localhost", "fivem", "root", "")
 
 RegisterServerEvent('garages:CheckForSpawnVeh')
 RegisterServerEvent('garages:CheckForVeh')
@@ -37,25 +37,26 @@ AddEventHandler('garages:CheckForSpawnVeh', function()
   --print(source)
   TriggerEvent('es:getPlayerFromId', source, function(user)
     local player = user.identifier
+    local spawnIt = false
     local executed_query = MySQL:executeQuery("SELECT * FROM user_vehicle WHERE identifier = '@username'",{['@username'] = player})
     local result = MySQL:getResults(executed_query, {'vehicle_model', 'vehicle_plate', 'vehicle_state', 'vehicle_colorprimary', 'vehicle_colorsecondary'}, "identifier")
     if(result)then
       for k,v in ipairs(result)do
-        --print(v.personalvehicle)
         vehicle = v.vehicle_model
         plate = v.vehicle_plate
         state = v.vehicle_state
         primarycolor = v.vehicle_colorprimary
         secondarycolor = v.vehicle_colorsecondary
 
-      local vehicle = vehicle
-      local plate = plate
-      local state = state      
-      local primarycolor = primarycolor
-      local secondarycolor = secondarycolor
+        local vehicle = vehicle
+        local plate = plate
+        local state = state
+        local primarycolor = primarycolor
+        local secondarycolor = secondarycolor
+        spawnIt = true
       end
     end
-    TriggerClientEvent('garages:SpawnVehicle', source, vehicle, plate, state, primarycolor, secondarycolor)
+    TriggerClientEvent('garages:SpawnVehicle', source, vehicle, plate, state, primarycolor, secondarycolor, spawnIt)
   end)
 end)
 
